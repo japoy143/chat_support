@@ -45,11 +45,11 @@ const cancel = () => {
 const formatTagsForTable = (chats: ChatType[]): string => {
     let result = '';
 
-    for (let index = 0; index < chats.length; index++) {
+    for (let index = 0; index < 2; index++) {
         result += chats[index].chat_scripts + ' ';
 
         // Break at 15 words
-        if (index === 9) {
+        if (index === 14) {
             // 14 because index starts at 0
             result = result.trim();
             return result;

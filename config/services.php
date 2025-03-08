@@ -36,7 +36,10 @@ return [
     ],
 
     'openai' => [
-        'key' => env('OPENAI_API_KEY'),
+        'key1' => env('OPENAI_API_KEY1'),
+        'key2' => env('OPENAI_API_KEY2'),
+        'key3' => env('OPENAI_API_KEY3'),
+
     ],
 
 ];

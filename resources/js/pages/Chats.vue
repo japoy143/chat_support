@@ -83,7 +83,7 @@ const formatWordsForTable = (chat: string): string => {
         }
 
         // Break every 3 words
-        if ((index + 1) % 3 === 0) {
+        if ((index + 1) % 5 === 0) {
             result = result.trim() + '\n';
         }
     }
@@ -261,4 +261,3 @@ watch(
 </template>
 
 function defineProps
-<T></T>

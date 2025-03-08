@@ -38,6 +38,8 @@ class TagController extends Controller
 
         ]);
 
+        $attributes['tagname'] = ucfirst($request->tagname);
+
         $attributes['user_id'] = Auth::id();
         //added tag
         Tag::create($attributes);

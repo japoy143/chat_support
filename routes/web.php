@@ -39,5 +39,8 @@ Route::get('chatsupport', [ChatSupportController::class, 'index'])->name('chatsu
 
 Route::post('sample', [ChatSupportController::class, 'chat'])->name('sample');
 
+//chat support api
+Route::get('chat/support/client/{prompt}', [ChatSupportController::class, 'chatSupportApi'])->name('chatsupport.api');
+
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
