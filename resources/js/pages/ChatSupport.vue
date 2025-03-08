@@ -4,6 +4,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
 import axios from 'axios';
 import { ref } from 'vue';
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
@@ -29,6 +30,10 @@ const submit = async () => {
         isLoading.value = true;
 
         const res = await axios.post('sample', { text: form.text }, { headers: { 'Content-Type': 'application/json' } });
+        if (res.data == 'not enough token') {
+            response.value = 'Not enough token please subscribe to our plan';
+            return;
+        }
         response.value = res.data.message;
 
         errors.value = '';
@@ -93,6 +98,23 @@ defineProps<{
                         <div>
                             <div v-if="isLoading" class="animate-pulse">
                                 <p><span class="bg-gray-100 text-xl text-transparent"> Samplee Teext Sample Text</span></p>
+                                <p class="mt-2">
+                                    <span class="bg-gray-100 text-xl text-transparent"
+                                        >Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum enim
+                                    </span>
+                                </p>
+                                <p class="mt-2">
+                                    <span class="bg-gray-100 text-xl text-transparent"
+                                        >Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum enim consectetur adipisicing
+                                    </span>
+                                </p>
+                                <p class="mt-2">
+                                    <span class="bg-gray-100 text-xl text-transparent"
+                                        >Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum enim consectetur adipisicing
+                                    </span>
+                                </p>
+
+                                <p class="mt-10"><span class="bg-gray-100 text-xl text-transparent"> Samplee Teext Sample Text</span></p>
                                 <p class="mt-2">
                                     <span class="bg-gray-100 text-xl text-transparent"
                                         >Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum enim

@@ -19,6 +19,8 @@ return new class extends Migration {
             $table->boolean('is_company_background_set')->default(0);
             $table->string('company_background')->default('');
             $table->rememberToken();
+            $table->uuid('client_token')->unique();
+            $table->integer('remaining_token_uses')->default(20);
             $table->timestamps();
         });
 

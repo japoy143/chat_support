@@ -154,7 +154,7 @@ watch(
                                 />
                             </div>
                             <!-- tags -->
-                            <div class="mt-1 overflow-y-scroll">
+                            <div class="mt-1 max-h-[200px] overflow-y-scroll">
                                 <h2 class="font-medium">Tags</h2>
                                 <div v-for="tag in tags" :key="tag.id">
                                     <div class="flex justify-between border-b px-6 py-1">

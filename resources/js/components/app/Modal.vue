@@ -7,7 +7,7 @@
             <textarea
                 class="mt-4 block w-full rounded-lg border-2 border-black px-4 py-3 text-2xl disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                 rows="4"
-                placeholder="ai assistant background"
+                placeholder="The company sells a computer and named rainshop"
                 v-model="form.company_background"
             ></textarea>
             <small class="text-red-500">{{ form.errors.company_background }}</small>
@@ -32,6 +32,7 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
 import { defineEmits } from 'vue';
+import { useToast } from 'vue-toast-notification';
 //imports
 const emit = defineEmits(['close']);
 
@@ -39,6 +40,8 @@ const emit = defineEmits(['close']);
 const props = defineProps<{
     isModalOpen?: boolean;
 }>();
+
+const toast = useToast();
 
 //watch
 
@@ -54,6 +57,7 @@ const submit = () => {
         onSuccess() {
             form.reset();
             props.isModalOpen = false;
+            toast.success('Successfully save company background');
             emit('close');
         },
         onError() {},
