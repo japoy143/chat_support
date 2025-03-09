@@ -6,7 +6,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, Sid
 
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, BookText, Folder, LayoutGrid, MessagesSquare, TagIcon } from 'lucide-vue-next';
+import { BookOpen, BookText, ChevronsLeftRightEllipsis, Folder, LayoutGrid, MessagesSquare, TagIcon } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 
 const mainNavItems: NavItem[] = [
@@ -29,6 +29,11 @@ const mainNavItems: NavItem[] = [
         title: 'ChatSupport',
         href: '/chatsupport',
         icon: MessagesSquare,
+    },
+    {
+        title: 'Integration',
+        href: '/integration',
+        icon: ChevronsLeftRightEllipsis,
     },
 ];
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ChatSupportController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\IntegrationController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -41,6 +42,9 @@ Route::post('sample', [ChatSupportController::class, 'chat'])->name('sample');
 
 //chat support api
 Route::get('chat/{token}/client/{prompt}', [ChatSupportController::class, 'chatSupportApi'])->name('chatsupport.api');
+
+//integration
+Route::get('integration', [IntegrationController::class, 'index'])->name('integration');
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
