@@ -5,9 +5,9 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
 import ToastPlugin from 'vue-toast-notification';
+import Vue3Toastify, { type ToastContainerOptions } from 'vue3-toastify';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import { initializeTheme } from './composables/useAppearance';
-
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
     interface ImportMetaEnv {
@@ -28,6 +28,9 @@ createInertiaApp({
     resolve: (name) => resolvePageComponent(`./pages/${name}.vue`, import.meta.glob<DefineComponent>('./pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
+            .use(Vue3Toastify, {
+                autoClose: 3000,
+            } as ToastContainerOptions)
             .use(ToastPlugin)
             .use(plugin)
             .use(ZiggyVue)

@@ -4,8 +4,8 @@ import { ChatType, TagType, type BreadcrumbItem } from '@/types';
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import { debounce } from 'lodash';
 import { ref, watch } from 'vue';
-import { useToast } from 'vue-toast-notification';
-import 'vue-toast-notification/dist/theme-sugar.css';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -13,8 +13,6 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/tags',
     },
 ];
-//toast
-const toast = useToast();
 
 //forms
 const search = ref('');
@@ -179,7 +177,7 @@ defineProps<{
                                                         :href="route('tags.delete', tag.id)"
                                                         method="delete"
                                                         type="button"
-                                                        class="inline-flex items-center gap-x-2 rounded-lg border border-transparent text-sm font-semibold text-blue-600 hover:text-blue-800 focus:text-blue-800 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
+                                                        class="inline-flex items-center gap-x-2 rounded-lg border border-transparent text-sm font-semibold text-red-600 hover:text-red-800 focus:text-red-800 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-red-500 dark:hover:text-red-400 dark:focus:text-red-400"
                                                     >
                                                         Delete
                                                     </Link>

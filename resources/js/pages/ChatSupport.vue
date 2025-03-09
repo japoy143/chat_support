@@ -4,6 +4,8 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
 import axios from 'axios';
 import { ref } from 'vue';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -29,9 +31,11 @@ const submit = async () => {
         response.value = '';
         isLoading.value = true;
 
-        const res = await axios.post('sample', { text: form.text }, { headers: { 'Content-Type': 'application/json' } });
+        const res = await axios.post('chatsupport/prompt', { text: form.text }, { headers: { 'Content-Type': 'application/json' } });
         if (res.data == 'not enough token') {
             response.value = 'Not enough token please subscribe to our plan';
+            toast.warning('Not enough token please subscribe to our plan');
+            form.reset();
             return;
         }
         response.value = res.data.message;
@@ -45,7 +49,7 @@ const submit = async () => {
         isLoading.value = false;
     }
 
-    // form.post('sample');
+    // form.post('chatsupport.prompt');
 };
 
 defineProps<{

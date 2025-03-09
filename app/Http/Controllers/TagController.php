@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class TagController extends Controller
@@ -16,16 +17,18 @@ class TagController extends Controller
 
             'tags' => Tag::when($request->search, function ($query) use ($request) {
                 $query->where('tagname', 'like', '%' . $request->search . '%');
-            })->get()->map(function ($tag) {
-                return [
-                    'id' => $tag->id,
-                    'tagname' => $tag->tagname,
-                    'user_id' => $tag->user_id,
-                    'created_at' => $tag->created_at,
-                    'updated_at' => $tag->updated_at,
-                    'associated_chats' => $tag->chats,
-                ];
-            })
+            })->get()
+                ->filter(fn($item) => Gate::allows('view', $item))
+                ->map(function ($tag) {
+                    return [
+                        'id' => $tag->id,
+                        'tagname' => $tag->tagname,
+                        'user_id' => $tag->user_id,
+                        'created_at' => $tag->created_at,
+                        'updated_at' => $tag->updated_at,
+                        'associated_chats' => $tag->chats,
+                    ];
+                })
         ]);
     }
 

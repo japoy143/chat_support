@@ -32,7 +32,8 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
 import { defineEmits } from 'vue';
-import { useToast } from 'vue-toast-notification';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 //imports
 const emit = defineEmits(['close']);
 
@@ -40,8 +41,6 @@ const emit = defineEmits(['close']);
 const props = defineProps<{
     isModalOpen?: boolean;
 }>();
-
-const toast = useToast();
 
 //watch
 

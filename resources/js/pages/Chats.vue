@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import Modal from '@/components/app/Modal.vue';
 import Dialog from '@/components/ui/dialog/Dialog.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { ChatType, TagType, type BreadcrumbItem } from '@/types';
-import { Head, Link, router, useForm } from '@inertiajs/vue3';
+import { Head, Link, router, useForm, usePage } from '@inertiajs/vue3';
 import { debounce } from 'lodash';
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useToast } from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
 
@@ -15,12 +16,25 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+const emit = defineEmits(['close']);
+
+//check if company background is fillout
+onMounted(() => {
+    const page = usePage();
+    const is_company_set = page.props.auth.user.is_company_background_set;
+    if (!is_company_set) {
+        isModalOpen.value = true;
+    }
+});
+
 //toast
 const toast = useToast();
 
 //refs
 
 const addedTags = ref(<TagType[]>[]);
+
+const isModalOpen = ref(false);
 
 const form = useForm({
     chat_scripts: '',
@@ -36,6 +50,10 @@ defineProps<{
 }>();
 
 //methods
+const closeModal = () => {
+    emit('close', (isModalOpen.value = false));
+};
+
 const submit = () => {
     form.tags = addedTags.value;
     if (form.chat_scripts !== '') {
@@ -125,6 +143,7 @@ watch(
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="p-4">
+            <Modal :isModalOpen="isModalOpen" @close="closeModal" />
             <div>
                 <div>
                     <div class="grid auto-rows-min gap-4 md:grid-cols-3">
@@ -242,7 +261,7 @@ watch(
                                                         :href="route('chat.delete', chat.id)"
                                                         method="delete"
                                                         type="button"
-                                                        class="inline-flex items-center gap-x-2 rounded-lg border border-transparent text-sm font-semibold text-blue-600 hover:text-blue-800 focus:text-blue-800 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
+                                                        class="inline-flex items-center gap-x-2 rounded-lg border border-transparent text-sm font-semibold text-red-600 hover:text-red-800 focus:text-red-800 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-red-500 dark:hover:text-red-400 dark:focus:text-red-400"
                                                     >
                                                         Delete
                                                     </Link>

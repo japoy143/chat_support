@@ -107,8 +107,8 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/vue3';
 import axios from 'axios';
 import { ref } from 'vue';
-
-import { useToast } from 'vue-toast-notification';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -117,8 +117,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const toast = useToast();
-
+//toast https://www.npmjs.com/package/vue3-toastify
 const customMessage = ref('');
 
 const page = usePage();
@@ -142,6 +141,11 @@ const send = async () => {
         response.value = '';
         isLoading.value = true;
         const res = await axios.get(`chat/${page.props.auth.user.client_token}/client/What is our Company background?`);
+        if (res.data == 'not enough token') {
+            response.value = 'Not enough token please subscribe to our plan';
+            toast.warning('Not enough token please subscribe to our plan');
+            return;
+        }
         response.value = res.data.message;
         console.log(res.data);
     } catch (e) {
@@ -152,11 +156,19 @@ const send = async () => {
 };
 
 const sendCustom = async () => {
+    if (customMessage.value === '') {
+        toast.warning('Please provide prompt');
+        return;
+    }
     try {
         response.value = '';
         isLoading.value = true;
         const res = await axios.get(`chat/${page.props.auth.user.client_token}/client/${customMessage.value}`);
-        console.log(`custom message: ${customMessage}`);
+        if (res.data == 'not enough token') {
+            response.value = 'Not enough token please subscribe to our plan';
+            toast.warning('Not enough token please subscribe to our plan');
+            return;
+        }
         response.value = res.data.message;
         console.log(res.data);
     } catch (e) {
