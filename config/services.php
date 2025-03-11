@@ -42,4 +42,8 @@ return [
 
     ],
 
+    'admin_role' => [
+        'key' => env('Admin_Key')
+    ]
+
 ];

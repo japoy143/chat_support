@@ -178,7 +178,7 @@ watch(
                                 <div v-for="tag in tags" :key="tag.id">
                                     <div class="flex justify-between border-b px-6 py-1">
                                         <p>{{ tag.tagname }}</p>
-                                        <button class="font-bold text-blue-400" @click="associateTag(tag)">add</button>
+                                        <button class="font-bold text-indigo-600" @click="associateTag(tag)">add</button>
                                     </div>
                                 </div>
                             </div>

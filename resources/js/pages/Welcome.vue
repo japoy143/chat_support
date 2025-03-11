@@ -8,6 +8,13 @@ import Personal from '../../../public/assets/svgs/personal.svg';
 import Program from '../../../public/assets/svgs/program.svg';
 import Scripts from '../../../public/assets/svgs/scripts.svg';
 import Sort from '../../../public/assets/svgs/sort.svg';
+
+const scrollAnimate = (navigate: string) => {
+    const contactSection = document.getElementById(navigate);
+    if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+};
 </script>
 
 <template>
@@ -49,7 +56,7 @@ import Sort from '../../../public/assets/svgs/sort.svg';
         </header>
         <!-- hero section -->
         <section
-            class="duration-750 starting:opacity-0 grid h-[90vh] grid-cols-2 items-center justify-center pb-10 opacity-100 transition-opacity lg:grow xl:w-[60%]"
+            class="duration-750 starting:opacity-0 grid h-[90vh] grid-cols-2 items-center justify-center scroll-smooth pb-10 opacity-100 transition-opacity lg:grow xl:w-[60%]"
         >
             <div class="max-w-xl text-start text-4xl font-bold">
                 <p>
@@ -64,12 +71,14 @@ import Sort from '../../../public/assets/svgs/sort.svg';
                 </p>
                 <!-- Call to action -->
                 <div class="mt-4 flex-row items-center space-x-2">
-                    <button
+                    <Link
+                        :href="route('register')"
                         class="inline-flex items-center gap-x-2 rounded-lg border border-transparent bg-black px-4 py-3 text-sm font-medium text-white disabled:pointer-events-none disabled:opacity-50 dark:bg-white dark:text-black"
                     >
                         Get Started
-                    </button>
+                    </Link>
                     <button
+                        @click="scrollAnimate('contact')"
                         class="inline-flex items-center gap-x-2 rounded-lg border border-transparent px-4 py-3 text-lg font-medium disabled:pointer-events-none disabled:opacity-50 dark:bg-white dark:text-black"
                     >
                         Our Plans
@@ -168,7 +177,7 @@ import Sort from '../../../public/assets/svgs/sort.svg';
                             <p>Sample</p>
                         </div>
                     </div>
-                    <button class="h-[40px] w-full rounded bg-gray-900 text-white">Get Started</button>
+                    <button @click="scrollAnimate('contact')" class="h-[40px] w-full rounded bg-gray-900 text-white">Get Started</button>
                 </div>
             </div>
 
@@ -194,7 +203,12 @@ import Sort from '../../../public/assets/svgs/sort.svg';
                             <p>Sample</p>
                         </div>
                     </div>
-                    <button class="h-[40px] w-full rounded bg-indigo-900 text-white">Get Started</button>
+                    <button
+                        @click="scrollAnimate('contact')"
+                        class="flex h-[40px] w-full items-center justify-center rounded bg-indigo-900 text-center text-white"
+                    >
+                        Get Started
+                    </button>
                 </div>
             </div>
             <div class="flex h-[600px] flex-col rounded-md p-4">
@@ -220,13 +234,13 @@ import Sort from '../../../public/assets/svgs/sort.svg';
                             <p>Sample</p>
                         </div>
                     </div>
-                    <button class="h-[40px] w-full rounded bg-gray-900 text-white">Get Started</button>
+                    <button @click="scrollAnimate('contact')" class="h-[40px] w-full rounded bg-gray-900 text-white">Get Started</button>
                 </div>
             </div>
         </section>
     </div>
     <!-- contact information -->
-    <section class="flex h-[50vh] w-full items-center justify-center bg-indigo-800 p-4">
+    <section id="contact" class="flex w-full items-center justify-center bg-indigo-800 p-4">
         <div class="grid h-full w-1/2 grid-cols-2">
             <div class="p-4 text-white">
                 <h1 class="text-4xl font-medium">Contact Us</h1>
@@ -269,12 +283,12 @@ import Sort from '../../../public/assets/svgs/sort.svg';
                 <form action="" class="mt-2">
                     <div>
                         <label for="email" class="font-medium">Email</label>
-                        <input type="text" id="email" class="block w-1/2" />
+                        <input type="text" id="email" class="block w-full md:w-3/4" />
                     </div>
 
                     <div class="mt-4">
                         <label for="plan" class="font-medium">Plan</label>
-                        <input type="text" id="plan" class="block w-1/2" />
+                        <input type="text" id="plan" class="block w-full md:w-3/4" />
                     </div>
 
                     <div class="mt-4">

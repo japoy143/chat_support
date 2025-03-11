@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ChatSupportController;
 use App\Http\Controllers\DashboardController;
@@ -11,6 +13,29 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Welcome');
 })->name('home');
+
+/*
+ADMIN
+*/
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    //admin dashboard
+    Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
+    //admin users
+    Route::get('admin/users', [AdminController::class, 'users'])->name("admin.users");
+
+});
+//admin register
+Route::get('admin/register', [AdminAuthController::class, 'register'])->name('admin.register');
+
+Route::post('admin/register', [AdminAuthController::class, 'store'])->name('admin.store');
+
+//admin login
+Route::get('admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
+
+Route::post('admin/login', [AdminAuthController::class, 'loginUser'])->name('admin.login_user');
+
 
 
 //dashboard
@@ -64,6 +89,7 @@ INTEGRATION
 Route::middleware(['auth', 'verified'])->group(function () {
     //integration
     Route::get('integration', [IntegrationController::class, 'index'])->name('integration');
+
 });
 
 require __DIR__ . '/settings.php';
