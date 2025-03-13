@@ -25,6 +25,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //admin users
     Route::get('admin/users', [AdminController::class, 'users'])->name("admin.users");
 
+    //admin users subscribe
+    Route::post('admin/{id}/subscribe', [AdminController::class, 'subscribe'])->name('admin.users.subscribe');
 });
 //admin register
 Route::get('admin/register', [AdminAuthController::class, 'register'])->name('admin.register');

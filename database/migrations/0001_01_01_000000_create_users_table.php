@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->rememberToken();
             $table->uuid('client_token')->unique();
             $table->integer('remaining_token_uses')->default(20);
+            $table->string('plans')->default('free');
             $table->timestamps();
         });
 
