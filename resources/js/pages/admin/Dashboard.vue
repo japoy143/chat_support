@@ -18,10 +18,20 @@ const props = defineProps<{
     free_plan_users: object;
     business_plan_users: object;
     start_up_plan_users: Object;
+    day_created: Object;
+    today: any;
 }>();
 
-const months = ['January', 'February', 'March', 'April', 'May', 'Jun', 'July', 'August', 'September', 'October', 'November', 'December'];
-const monthlyUsers = [2, 0, 10, 4, 0, 20, 100, 30, 20, 10, 20, 40];
+const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const daysData = [
+    props.day_created.Monday,
+    props.day_created.Tuesday,
+    props.day_created.Wednesday,
+    props.day_created.Thursday,
+    props.day_created.Friday,
+    props.day_created.Saturday,
+    props.day_created.Sunday,
+];
 onMounted(() => {
     const ctx = document.getElementById('myChart');
 
@@ -52,12 +62,12 @@ onMounted(() => {
     new Chart(lineChart, {
         type: 'line',
         data: {
-            labels: months,
+            labels: days,
             datasets: [
                 {
                     borderColor: '#F17170',
-                    label: '# of Users',
-                    data: monthlyUsers,
+                    label: '# of Accounts Created',
+                    data: daysData,
                     borderWidth: 4,
                 },
             ],

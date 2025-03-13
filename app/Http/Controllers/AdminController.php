@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Daycreated;
+use App\Models\Inquiries;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -26,6 +28,8 @@ class AdminController extends Controller
                     ->get(),
                 'business_plan_users' => User::where('plans', '=', 'business')->get(),
                 'start_up_plan_users' => User::where('plans', '=', 'start up')->get(),
+                'day_created' => Daycreated::find(1),
+                'today' => Carbon::now()->dayOfWeek()
             ]
         );
     }
@@ -63,5 +67,22 @@ class AdminController extends Controller
     }
 
 
+
+    public function inquiries(Request $request)
+    {
+        return Inertia::render('admin/Inquiries', [
+            'all_inquiries' => Inquiries::when($request->search, function ($query) use ($request) {
+                $query->where('email', 'like', '%' . $request->search . '%');
+            })->get()
+        ]);
+    }
+
+
+    public function statusUpdate(Request $request, Inquiries $inquiry)
+    {
+        $status = $request->input('data');
+
+        $inquiry->update(['status' => $status]);
+    }
 
 }

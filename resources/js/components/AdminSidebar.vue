@@ -4,7 +4,7 @@ import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { BookText, TagIcon } from 'lucide-vue-next';
+import { BookText, MessageSquareMore, TagIcon } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 
 const page = usePage();
@@ -19,6 +19,11 @@ const mainNavItems: NavItem[] = [
         title: 'Users',
         href: '/admin/users',
         icon: TagIcon,
+    },
+    {
+        title: 'Inquiries',
+        href: '/admin/inquiries',
+        icon: MessageSquareMore,
     },
 ];
 </script>

@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ChatSupportController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\IntegrationController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
@@ -26,8 +27,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('admin/users', [AdminController::class, 'users'])->name("admin.users");
 
     //admin users subscribe
-    Route::post('admin/{id}/subscribe', [AdminController::class, 'subscribe'])->name('admin.users.subscribe');
+    Route::patch('admin/{id}/subscribe', [AdminController::class, 'subscribe'])->name('admin.users.subscribe');
+
+    //admin inquiries for subscription
+    Route::get('admin/inquiries', [AdminController::class, 'inquiries'])->name('admin.inquiries');
+
+    //admin update status inquiries
+    Route::patch('admin/inquiries/status/{inquiry}', [AdminController::class, 'statusUpdate'])->name('admin.status.update');
 });
+
 //admin register
 Route::get('admin/register', [AdminAuthController::class, 'register'])->name('admin.register');
 
@@ -37,6 +45,13 @@ Route::post('admin/register', [AdminAuthController::class, 'store'])->name('admi
 Route::get('admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
 
 Route::post('admin/login', [AdminAuthController::class, 'loginUser'])->name('admin.login_user');
+
+
+/*
+MAILS
+*/
+
+Route::post('sendSubscription', [EmailController::class, 'sendSubscription'])->name('send');
 
 
 

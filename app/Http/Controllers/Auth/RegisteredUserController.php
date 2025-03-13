@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Daycreated;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -44,6 +46,39 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             // 'client_token' => Str::uuid()
         ]);
+
+        $today = Carbon::now()->dayOfWeek();
+        $day = '';
+        switch ($today) {
+
+            case 0:
+                $day = 'Sunday';
+                break;
+            case 1:
+                $day = 'Monday';
+                break;
+            case 2:
+                $day = "Tuesday";
+                break;
+            case 3:
+                $day = 'Wednesday';
+                break;
+            case 4:
+                $day = 'Thursday';
+                break;
+            case 5:
+                $day = 'Friday';
+                break;
+            case 6:
+                $day = 'Saturday';
+                break;
+        }
+
+        $day_query = Daycreated::find(1);
+
+        $users_day_created = $day_query->$day + 1;
+
+        $day_query->update([$day => $users_day_created]);
 
         event(new Registered($user));
 

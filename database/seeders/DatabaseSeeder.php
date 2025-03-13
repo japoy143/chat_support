@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\ApiKeyCounter;
+use App\Models\Daycreated;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -23,6 +24,8 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         Role::create(['name' => 'admin']);
+
+        Daycreated::create(['Monday' => 0, 'Tuesday' => 0, 'Wednesday' => 0, 'Thursday' => 0, 'Friday' => 0, 'Saturday' => 0, 'Sunday' => 0, 'day_counter' => 0]);
 
         ApiKeyCounter::create(['count' => 0]);
     }

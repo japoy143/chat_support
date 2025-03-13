@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import { BotMessageSquareIcon, Check, Clock11, Mail, MapPin } from 'lucide-vue-next';
 import Customize from '../../../public/assets/svgs/customize.svg';
 import Fast from '../../../public/assets/svgs/fast.svg';
@@ -8,12 +8,35 @@ import Personal from '../../../public/assets/svgs/personal.svg';
 import Program from '../../../public/assets/svgs/program.svg';
 import Scripts from '../../../public/assets/svgs/scripts.svg';
 import Sort from '../../../public/assets/svgs/sort.svg';
+//toast
+import { useToast } from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
 const scrollAnimate = (navigate: string) => {
     const contactSection = document.getElementById(navigate);
     if (contactSection) {
         contactSection.scrollIntoView({ behavior: 'smooth' });
     }
+};
+
+const toast = useToast();
+
+const form = useForm({
+    email: '',
+    plan: 'Business',
+    client_message: '',
+});
+const send = () => {
+    form.post('sendSubscription', {
+        preserveState: true,
+        preserveScroll: true,
+        onSuccess() {
+            toast.success('Email Send Successfully send');
+        },
+        onError() {
+            toast.warning('Email failure to  send');
+        },
+    });
 };
 </script>
 
@@ -280,23 +303,30 @@ const scrollAnimate = (navigate: string) => {
             <!-- send us -->
             <div class="p-4 text-white">
                 <h1 class="text-xl font-medium">Send us a message</h1>
-                <form action="" class="mt-2">
+                <form @submit.prevent="send" action="" class="mt-2">
                     <div>
                         <label for="email" class="font-medium">Email</label>
-                        <input type="text" id="email" class="block w-full md:w-3/4" />
+                        <input type="text" id="email" class="block w-full md:w-3/4" v-model="form.email" />
+                        <small class="text-red-500">{{ form.errors.email }}</small>
                     </div>
 
                     <div class="mt-4">
                         <label for="plan" class="font-medium">Plan</label>
-                        <input type="text" id="plan" class="block w-full md:w-3/4" />
+                        <select v-model="form.plan" name="plan" id="plan" class="block w-full bg-indigo-800 text-white md:w-3/4">
+                            <option value="" disabled>Select an option</option>
+                            <option value="Business" class="bg-white text-black">Business</option>
+                            <option value="Start Up" class="bg-white text-black">Start Up</option>
+                        </select>
+                        <small class="text-red-500">{{ form.errors.plan }}</small>
                     </div>
 
                     <div class="mt-4">
                         <label for="plan" class="font-medium">Message</label>
-                        <textarea name="" id="" rows="6" class="block w-full"></textarea>
+                        <textarea v-model="form.client_message" name="" id="" rows="6" class="block w-full p-2 text-black"></textarea>
+                        <small class="text-red-500">{{ form.errors.client_message }}</small>
                     </div>
 
-                    <button class="mt-4 h-[40px] w-full rounded bg-gray-900 text-white">Send Message</button>
+                    <button type="submit" class="mt-4 h-[40px] w-full rounded bg-gray-900 text-white">Send Message</button>
                 </form>
             </div>
         </div>
