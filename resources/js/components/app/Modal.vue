@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
-import { defineEmits } from 'vue';
+import { defineEmits, ref } from 'vue';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 //imports
@@ -46,6 +46,8 @@ const props = defineProps<{
 
 //refs
 
+const localIsOpen = ref(props.isModalOpen ?? false);
+
 const form = useForm({
     company_background: '',
 });
@@ -55,7 +57,7 @@ const submit = () => {
         preserveState: true,
         onSuccess() {
             form.reset();
-            props.isModalOpen = false;
+            localIsOpen.value = false;
             toast.success('Successfully save company background');
             emit('close');
         },

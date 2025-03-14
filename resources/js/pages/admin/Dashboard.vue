@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import AdminLayout from '@/layouts/AdminLayout.vue';
-import { type BreadcrumbItem } from '@/types';
+import { DayCreatedType, type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import Chart from 'chart.js/auto';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -14,23 +14,29 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 const props = defineProps<{
     name?: string;
-    all_users: object;
-    free_plan_users: object;
-    business_plan_users: object;
-    start_up_plan_users: Object;
-    day_created: Object;
+    all_users: object[];
+    free_plan_users: object[];
+    business_plan_users: object[];
+    start_up_plan_users: Object[];
+    day_created: DayCreatedType;
     today: any;
 }>();
 
+const day_created = ref<DayCreatedType>(props.day_created);
+const all_users_length = ref(props.all_users.length);
+const free_plan_users_length = ref(props.free_plan_users.length);
+const business_plan_users_length = ref(props.business_plan_users.length);
+const start_up_plan_users_length = ref(props.start_up_plan_users.length);
+
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const daysData = [
-    props.day_created.Monday,
-    props.day_created.Tuesday,
-    props.day_created.Wednesday,
-    props.day_created.Thursday,
-    props.day_created.Friday,
-    props.day_created.Saturday,
-    props.day_created.Sunday,
+    day_created.value.Monday,
+    day_created.value.Tuesday,
+    day_created.value.Wednesday,
+    day_created.value.Thursday,
+    day_created.value.Friday,
+    day_created.value.Saturday,
+    day_created.value.Sunday,
 ];
 onMounted(() => {
     const ctx = document.getElementById('myChart');
@@ -45,7 +51,7 @@ onMounted(() => {
                 {
                     backgroundColor: ['#F17170', '#74C69D', '#867DBE', '#EFF0C5'],
                     label: '# of Users',
-                    data: [props.all_users.length, props.free_plan_users.length, props.business_plan_users.length, props.start_up_plan_users.length],
+                    data: [all_users_length, free_plan_users_length, business_plan_users_length, start_up_plan_users_length],
                     borderWidth: 1,
                 },
             ],

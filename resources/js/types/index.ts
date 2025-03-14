@@ -44,4 +44,16 @@ export interface TagType {
     associated_chats: string;
 }
 
+export interface DayCreatedType {
+    id: number;
+    Monday: number;
+    Tuesday: number;
+    Wednesday: number;
+    Thursday: number;
+    Friday: number;
+    Saturday: number;
+    Sunday: number;
+    day_counter: number;
+}
+
 export type BreadcrumbItemType = BreadcrumbItem;
