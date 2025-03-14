@@ -177,8 +177,4 @@ const sendCustom = async () => {
         isLoading.value = false;
     }
 };
-
-const props = defineProps<{
-    name?: string;
-}>();
 </script>

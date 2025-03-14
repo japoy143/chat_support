@@ -6,6 +6,7 @@ import { ChatType, TagType, type BreadcrumbItem } from '@/types';
 import { Head, Link, router, useForm, usePage } from '@inertiajs/vue3';
 import { debounce } from 'lodash';
 import { onMounted, ref, watch } from 'vue';
+//toast
 import { useToast } from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
 
@@ -278,5 +279,3 @@ watch(
         </div>
     </AppLayout>
 </template>
-
-function defineProps
