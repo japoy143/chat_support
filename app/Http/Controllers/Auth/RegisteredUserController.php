@@ -44,44 +44,33 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            // 'client_token' => Str::uuid()
         ]);
 
-        $today = Carbon::now()->dayOfWeek();
-        $day = '';
-        switch ($today) {
 
-            case 0:
-                $day = 'Sunday';
-                break;
-            case 1:
-                $day = 'Monday';
-                break;
-            case 2:
-                $day = "Tuesday";
-                break;
-            case 3:
-                $day = 'Wednesday';
-                break;
-            case 4:
-                $day = 'Thursday';
-                break;
-            case 5:
-                $day = 'Friday';
-                break;
-            case 6:
-                $day = 'Saturday';
-                break;
+        $dayName = Carbon::now()->format('l');
+
+
+        $dayQuery = Daycreated::find(1);
+        if ($dayQuery) {
+            $dayQuery->update([
+                $dayName => $dayQuery->{$dayName} + 1
+            ]);
+        } else {
+
+            Daycreated::create([
+                $dayName => 1,
+
+                'Sunday' => 0,
+                'Monday' => 0,
+                'Tuesday' => 0,
+                'Wednesday' => 0,
+                'Thursday' => 0,
+                'Friday' => 0,
+                'Saturday' => 0,
+            ]);
         }
 
-        $day_query = Daycreated::find(1);
-
-        $users_day_created = $day_query->$day + 1;
-
-        $day_query->update([$day => $users_day_created]);
-
         event(new Registered($user));
-
         Auth::login($user);
 
         return to_route('chats.index');
